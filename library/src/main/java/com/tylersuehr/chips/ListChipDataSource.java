@@ -198,8 +198,13 @@ public class ListChipDataSource extends ObservableChipDataSource {
 
         // Check if the chip is filterable
         if (foundChip.isFilterable()) {
-            mFiltered.add(foundChip);
-            mOriginal.add(foundChip);
+            int foundIndex = mFiltered.indexOf(foundChip);
+            if (foundIndex == -1) mFiltered.add(foundChip);
+            else mFiltered.set(foundIndex, foundChip);
+
+            foundIndex = mOriginal.indexOf(foundChip);
+            if (!mOriginal.contains(foundChip)) mOriginal.add(foundChip);
+            else mOriginal.set(foundIndex, foundChip);
 
             // Sort the filterable chips
             Collections.sort(mFiltered, Chip.getComparator());

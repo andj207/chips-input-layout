@@ -39,7 +39,7 @@ final class ChipOptions {
     ColorStateList mFilterableListBackgroundColor;
     ColorStateList mFilterableListTextColor;
     boolean mFilterableListAlwaysVisible;
-    int mFilterableListMaxSelect = Integer.MAX_VALUE;
+    int mFilterableListMaxSelect;
     float mFilterableListElevation;
 
     int mTextAppearanceIdRes;
