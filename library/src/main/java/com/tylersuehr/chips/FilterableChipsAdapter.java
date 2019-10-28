@@ -1,7 +1,7 @@
 package com.tylersuehr.chips;
 
 import android.graphics.PorterDuff;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,14 +123,16 @@ class FilterableChipsAdapter
             // TODO: POSSIBLE OPTIMIZATION
             // Have takeChip(int) return a Chip object; which can be null checked for callback
 
-            final int index = getAdapterPosition();
-            if (index >= 0 && index < getItemCount()) {
-                // Take the chip from the filtered chip list
-                final Chip chip = mDataSource.getFilteredChip(getAdapterPosition());
-                mDataSource.takeChip(chip);
+            if (mDataSource.getSelectedChips().size() < mOptions.mFilterableListMaxSelect) {
+                final int index = getAdapterPosition();
+                if (index >= 0 && index < getItemCount()) {
+                    // Take the chip from the filtered chip list
+                    final Chip chip = mDataSource.getFilteredChip(getAdapterPosition());
+                    mDataSource.takeChip(chip);
 
-                // Trigger callback with the clicked chip
-                mListener.onFilteredChipClick(chip);
+                    // Trigger callback with the clicked chip
+                    mListener.onFilteredChipClick(chip);
+                }
             }
         }
     }

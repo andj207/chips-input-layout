@@ -36,5 +36,7 @@
         <attr name="filter_elevation" format="dimension"/>
         <attr name="filter_backgroundColor" format="color" />
         <attr name="filter_textColor" format="color" />
+        <attr name="filter_visible" format="boolean" />
+        <attr name="filter_max_select" format="integer" />
     </declare-styleable>
 </resources>

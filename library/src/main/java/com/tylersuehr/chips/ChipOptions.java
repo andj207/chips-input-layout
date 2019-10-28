@@ -4,7 +4,7 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.AttributeSet;
 
 /**
@@ -38,6 +38,8 @@ final class ChipOptions {
     /* Properties pertaining to FilterableRecyclerView */
     ColorStateList mFilterableListBackgroundColor;
     ColorStateList mFilterableListTextColor;
+    boolean mFilterableListAlwaysVisible;
+    int mFilterableListMaxSelect = Integer.MAX_VALUE;
     float mFilterableListElevation;
 
     int mTextAppearanceIdRes;
@@ -84,6 +86,8 @@ final class ChipOptions {
         mFilterableListElevation = a.getDimension(R.styleable.ChipsInputLayout_filter_elevation, R.dimen.chip_open_elevation);
         mFilterableListBackgroundColor = a.getColorStateList(R.styleable.ChipsInputLayout_filter_backgroundColor);
         mFilterableListTextColor = a.getColorStateList(R.styleable.ChipsInputLayout_filter_textColor);
+        mFilterableListAlwaysVisible = a.getBoolean(R.styleable.ChipsInputLayout_filter_visible, false);
+        mFilterableListMaxSelect = a.getInt(R.styleable.ChipsInputLayout_filter_max_select, Integer.MAX_VALUE);
 
         // Setup the properties for the ChipsInput itself
         mAllowCustomChips = a.getBoolean(R.styleable.ChipsInputLayout_allowCustomChips, true);

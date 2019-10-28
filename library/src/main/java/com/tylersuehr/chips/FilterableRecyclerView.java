@@ -3,9 +3,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -30,6 +30,7 @@ class FilterableRecyclerView extends RecyclerView implements ChipComponent {
     private ChipsInputLayout mChipsInput;
     /* Used to trigger filtering and receive callbacks to show or hide this */
     private Filter mFilter;
+    private boolean mAlwaysVisible = false;
 
 
     FilterableRecyclerView(Context c) {
@@ -45,6 +46,10 @@ class FilterableRecyclerView extends RecyclerView implements ChipComponent {
         if (options.mFilterableListBackgroundColor != null) {
             getBackground().setColorFilter(options.mFilterableListBackgroundColor
                     .getDefaultColor(), PorterDuff.Mode.SRC_ATOP);
+        }
+        if (options.mFilterableListAlwaysVisible){
+            mAlwaysVisible = true;
+            setVisibility(VISIBLE);
         }
     }
 
@@ -67,10 +72,12 @@ class FilterableRecyclerView extends RecyclerView implements ChipComponent {
                 @Override
                 public void onFilterComplete(int count) {
                     // Show if, and only if, there are results
-                    if (count > 0) {
-                        fadeIn();
-                    } else {
-                        fadeOut();
+                    if (!mAlwaysVisible){
+                        if (count > 0) {
+                            fadeIn();
+                        } else {
+                            fadeOut();
+                        }
                     }
                 }
             });
@@ -109,7 +116,7 @@ class FilterableRecyclerView extends RecyclerView implements ChipComponent {
      * Uses alpha animation to fade out the current view if it's not gone.
      */
     void fadeOut() {
-        if (getVisibility() == GONE) { return; }
+        if (getVisibility() == GONE || mAlwaysVisible) { return; }
 
         AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
         anim.setDuration(200);
